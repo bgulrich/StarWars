@@ -120,8 +120,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\Xaml.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\FilmsPage.xaml.cs">
+      <DependentUpon>FilmsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\FilmItem.xaml.cs">
       <DependentUpon>FilmItem.xaml</DependentUpon>
@@ -133,8 +134,15 @@
       <DependentUpon>PhotoPlaceholder.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\FilmViewModel.cs" />
-    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\InitializationPageViewModel.cs" />
+    <Compile Include="ViewModels\FilmsPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\FilmDetailsPage.xaml.cs">
+      <DependentUpon>FilmDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InitializationPage.xaml.cs">
+      <DependentUpon>InitializationPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -142,6 +150,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\StarWarsLogo.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -156,7 +165,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
+    <Page Include="Views\FilmsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -176,28 +185,49 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FilmDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InitializationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper">
       <Version>10.1.1</Version>
     </PackageReference>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection">
+      <Version>8.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration">
+      <Version>3.1.18</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection">
+      <Version>5.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.9</Version>
+      <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>7.0.2</Version>
     </PackageReference>
-    <PackageReference Include="Refit.Newtonsoft.Json">
+    <PackageReference Include="Refit.HttpClientFactory">
       <Version>6.0.94</Version>
     </PackageReference>
-    <PackageReference Include="Template10">
-      <Version>1.1.12</Version>
+    <PackageReference Include="Refit.Newtonsoft.Json">
+      <Version>6.0.94</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StarWars.ApiClient\StarWars.ApiClient.csproj">
       <Project>{b3ef3709-40a2-43a5-a697-196f88cfbfb4}</Project>
       <Name>StarWars.ApiClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StarWars.Data\StarWars.Data.csproj">
+      <Project>{454c2368-463c-4461-8927-85326f43e2dc}</Project>
+      <Name>StarWars.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

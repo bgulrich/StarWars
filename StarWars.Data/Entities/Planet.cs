@@ -17,8 +17,8 @@ namespace StarWars.Data.Entities
         public string SurfaceWater { get; set; }
         public string Population { get; set; }
 
-        public virtual ICollection<Film> Films { get; set; }
+        public virtual ICollection<FilmPlanet> FilmPlanets { get; set; }
 
-        public virtual ICollection<Character> Residents { get; set; }
+        public virtual ICollection<CharacterPlanet> CharacterPlanets { get; set; }
     }
 }

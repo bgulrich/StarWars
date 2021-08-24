@@ -19,8 +19,8 @@ namespace StarWars.Data.Entities
 
         public int HomeWorldId { get; set; }        
 
-        public virtual ICollection<Film> Films { get; set; }
+        public virtual ICollection<FilmSpecies> FilmSpecies { get; set; }
 
-        public virtual ICollection<Character> Characters { get; set; }
+        public virtual ICollection<CharacterSpecies> CharacterSpecies { get; set; }
     }
 }

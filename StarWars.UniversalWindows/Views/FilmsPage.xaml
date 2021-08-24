@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="StarWars.UniversalWindows.MainPage"
+    x:Class="StarWars.UniversalWindows.Views.FilmsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StarWars.UniversalWindows"
@@ -10,21 +10,24 @@
     xmlns:tk="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.DataContext>
-        <vm:MainPageViewModel/>
-    </Page.DataContext>
+   
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <TextBlock Text="Films" FontSize="36" FontWeight="Bold" Margin="20"/>
         <Button HorizontalAlignment="Right" Margin="10" Click="RefreshButton_Click">Refresh</Button>
-        <ListView ItemsSource="{x:Bind ViewModel.Films}" Grid.Row="1" SelectionMode="None" IsItemClickEnabled="True">
+        <ListView ItemsSource="{x:Bind ViewModel.Films}" Grid.Row="1" SelectionMode="None" IsItemClickEnabled="True"
+                  ItemClick="Film_Click">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:FilmViewModel">
-                    <Grid>
                     <uc:FilmItem />
-                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

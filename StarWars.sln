@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.UniversalWindows",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarWars.ApiClient", "StarWars.ApiClient\StarWars.ApiClient.csproj", "{B3EF3709-40A2-43A5-A697-196F88CFBFB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Data", "StarWars.Data\StarWars.Data.csproj", "{454C2368-463C-4461-8927-85326F43E2DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarWars.Data", "StarWars.Data\StarWars.Data.csproj", "{454C2368-463C-4461-8927-85326F43E2DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Data.Dummy", "StarWars.Data.Dummy\StarWars.Data.Dummy.csproj", "{139C984E-1AF5-4576-82CA-FF3B7F301AFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{19F9FE5C-7F8E-4A2C-9316-616630C51468}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{19F9FE5C-7F8E-4A2C-9316-616630C51468}.Debug|Any CPU.Build.0 = Debug|x86
+		{19F9FE5C-7F8E-4A2C-9316-616630C51468}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{19F9FE5C-7F8E-4A2C-9316-616630C51468}.Debug|ARM.ActiveCfg = Debug|ARM
 		{19F9FE5C-7F8E-4A2C-9316-616630C51468}.Debug|ARM.Build.0 = Debug|ARM
 		{19F9FE5C-7F8E-4A2C-9316-616630C51468}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -89,6 +93,26 @@ Global
 		{454C2368-463C-4461-8927-85326F43E2DC}.Release|x64.Build.0 = Release|Any CPU
 		{454C2368-463C-4461-8927-85326F43E2DC}.Release|x86.ActiveCfg = Release|Any CPU
 		{454C2368-463C-4461-8927-85326F43E2DC}.Release|x86.Build.0 = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|ARM.Build.0 = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|x64.Build.0 = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Debug|x86.Build.0 = Debug|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|ARM.ActiveCfg = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|ARM.Build.0 = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|ARM64.Build.0 = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|x64.ActiveCfg = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|x64.Build.0 = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|x86.ActiveCfg = Release|Any CPU
+		{139C984E-1AF5-4576-82CA-FF3B7F301AFC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

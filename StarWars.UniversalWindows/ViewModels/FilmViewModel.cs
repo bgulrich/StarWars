@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarWars.UniversalWindows.ViewModels
 {
-    public class FilmViewModel
+    public class FilmViewModel : ViewModelBase
     {
         public int EpisodeId { get; set; }
         public string Title { get; set; }

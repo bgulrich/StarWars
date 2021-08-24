@@ -13,12 +13,12 @@ namespace StarWars.Data.Entities
 
         public DateTime ReleaseDate { get; set; }
 
-        public virtual ICollection<Character> Characters { get; set; }
+        public virtual ICollection<FilmCharacter> FilmCharacters { get; set; }
 
-        public virtual ICollection<Species> Species { get; set; }
+        public virtual ICollection<FilmSpecies> FilmSpecies { get; set; }
 
-        public virtual ICollection<Planet> Planets { get; set; }
-        public virtual ICollection<Vehicle> Vehicles { get; set; }
-        public virtual ICollection<Starship> Starships { get; set; }
+        public virtual ICollection<FilmPlanet> FilmPlanets { get; set; }
+        public virtual ICollection<FilmVehicle> FilmVehicles { get; set; }
+        public virtual ICollection<FilmStarship> FilmStarships { get; set; }
     }
 }

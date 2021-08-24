@@ -19,8 +19,8 @@ namespace StarWars.Data.Entities
         public string Consumables { get; set; }
         public string VehicleClass { get; set; }
 
-        public virtual ICollection<Film> Films { get; set; }
+        public virtual ICollection<FilmVehicle> FilmVehicles { get; set; }
 
-        public virtual ICollection<Character> Pilots { get; set; }
+        public virtual ICollection<CharacterVehicle> CharacterVehicles { get; set; }
     }
 }

@@ -21,8 +21,8 @@ namespace StarWars.Data.Entities
         public string HyperdriveRating { get; set; }
         public string Mglt { get; set; }
 
-        public virtual ICollection<Film> Films { get; set; }
+        public virtual ICollection<FilmStarship> FilmStarships { get; set; }
 
-        public virtual ICollection<Character> Pilots { get; set; }
+        public virtual ICollection<CharacterStarship> CharacterStarships { get; set; }
     }
 }

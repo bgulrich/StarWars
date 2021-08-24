@@ -13,17 +13,30 @@
     <Grid Margin="5" Padding="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Canvas x:Name="ShadowHost"/>
-        <Rectangle x:Name="Rectangle" Grid.ColumnSpan="4" Fill="White" RadiusX="5" RadiusY="5" Stroke="Black" StrokeThickness="0.5" Margin="-10"/>
-        <uc:Photo Margin="10" UseRandomBackgroundColor="True" PlaceholderType="Film"/>
-        <TextBlock FontSize="16" Margin="10" Grid.Column="1" Text="{x:Bind Film.Title}"/>
-        <TextBlock Margin="10" Grid.Column="2" Text="{x:Bind Film.Director}"/>
-        <TextBlock Grid.Column="3">
-            <Run Text="Characters ("/><Run Text="{x:Bind Film.CharacterCount}"/><Run Text=")"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Canvas x:Name="ShadowHost" Grid.ColumnSpan="4" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-10"/>
+        <Rectangle x:Name="Rectangle" Grid.ColumnSpan="4" Grid.RowSpan="3" Fill="White" RadiusX="5" RadiusY="5" Stroke="Black" StrokeThickness="0.10" Margin="-10"/>
+        <uc:Photo x:Name="Photo" Margin="10" Grid.RowSpan="3" UseRandomBackgroundColor="True" PlaceholderType="Film"/>
+        <TextBlock x:Name="Title" FontSize="28" FontWeight="SemiBold" Margin="10" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Center" Text="{x:Bind Film.Title}"/>
+        <TextBlock Margin="5" Grid.Column="3">
+            <Run Text="Directed by"/>
+            <Run  Text="{x:Bind Film.Director}"/>
+        </TextBlock>
+        <TextBlock Margin="5" Grid.Column="3" Grid.Row="1">
+            <Run Text="Produced by"/>
+            <Run  Text="{x:Bind Film.Producer}"/>
+        </TextBlock>
+        <TextBlock Margin="5" Grid.Column="3" Grid.Row="2">
+            <Run Text="Released:"/>
+            <Run  Text="{x:Bind Film.ReleaseDate.Year}"/>
         </TextBlock>
     </Grid>
 </UserControl>

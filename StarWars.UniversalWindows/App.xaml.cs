@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using StarWars.ApiClient.Models;
+using StarWars.Data;
+using StarWars.UniversalWindows.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -14,6 +19,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Refit;
+using StarWars.ApiClient;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using AutoMapper;
 
 namespace StarWars.UniversalWindows
 {
@@ -28,8 +38,48 @@ namespace StarWars.UniversalWindows
         /// </summary>
         public App()
         {
+            Services = ConfigureServices();
+
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+        }
+
+
+        /// <summary>
+        /// Gets the current <see cref="App"/> instance in use
+        /// </summary>
+        public new static App Current => (App)Application.Current;
+
+        /// <summary>
+        /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
+        /// </summary>
+        public IServiceProvider Services { get; }
+
+        /// <summary>
+        /// Configures the services for the application.
+        /// </summary>
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            services.AddDbContext<StarWarsDbContext>();
+
+            services.AddTransient<ViewModels.InitializationPageViewModel>();
+            services.AddTransient<ViewModels.FilmsPageViewModel>();
+
+            services.AddAutoMapper(cfg =>
+            {
+                var indexRegex = new Regex(@"/?(<index>\d*)/$");
+
+                cfg.CreateMap<Film, Data.Entities.Film>()
+                   .ForMember(e => e.FilmCharacters, opt => opt.MapFrom(f => f.CharacterUris.Select(s => new Data.Entities.FilmCharacter { FilmId = f.EpisodeId, CharacterId = int.Parse(new Uri(s).Segments.Last().Trim('/')) })));
+               
+            });
+
+            services.AddRefitClient<IStarWarsApi>(new RefitSettings(new NewtonsoftJsonContentSerializer(new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() })))
+                    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://swapi.dev/"));
+
+            return services.BuildServiceProvider();
         }
 
         /// <summary>
@@ -66,7 +116,7 @@ namespace StarWars.UniversalWindows
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(Views.InitializationPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

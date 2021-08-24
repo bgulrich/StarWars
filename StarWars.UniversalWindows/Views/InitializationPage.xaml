@@ -1,0 +1,19 @@
+﻿<Page
+    x:Class="StarWars.UniversalWindows.Views.InitializationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StarWars.UniversalWindows.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:StarWars.UniversalWindows.UserControls"
+    xmlns:vm="using:StarWars.UniversalWindows.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
+        <uc:Photo x:Name="Icon" Image="/assets/StarWarsLogo.jpg" Height="150" Width="150" PlaceholderType="Film" Margin="20"/>
+        <TextBlock FontSize="36" TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWholeWords" Text="{x:Bind ViewModel.Message, Mode=OneWay}"/>
+        <Button x:Name="InitializeButton" HorizontalAlignment="Center" Margin="20" Click="InitializeButton_Click">Initialize</Button>
+        <ProgressBar Height="20" Width="400" Margin="20" />
+    </StackPanel>
+</Page>

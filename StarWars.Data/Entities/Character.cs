@@ -19,13 +19,12 @@ namespace StarWars.Data.Entities
 
         public Planet HomeWorld { get; set; }
 
-        public virtual ICollection<Film> Films { get; set; }
+        public virtual ICollection<FilmCharacter> FilmCharacters { get; set; }
 
-        public virtual ICollection<Species> Species { get; set; }
+        public virtual ICollection<CharacterSpecies> CharacterSpecies { get; set; }
 
-        public virtual ICollection<Vehicle> Vehicles { get; set; }
+        public virtual ICollection<CharacterVehicle> CharacterVehicles { get; set; }
 
-
-        public virtual ICollection<Starship> Starships { get; set; }
+        public virtual ICollection<CharacterStarship> CharacterStarships { get; set; }
     }
 }

@@ -32,6 +32,9 @@ namespace StarWars.UniversalWindows.UserControls
 
         public ViewModels.FilmViewModel Film => DataContext as ViewModels.FilmViewModel;
 
+        public TextBlock TitleControl => Title;
+        public Photo PhotoControl => Photo;
+
         private void InitializeDropShadow(UIElement shadowHost, Shape shadowTarget)
         {
             Visual hostVisual = ElementCompositionPreview.GetElementVisual(shadowHost);
@@ -39,8 +42,8 @@ namespace StarWars.UniversalWindows.UserControls
 
             // Create a drop shadow
             var dropShadow = compositor.CreateDropShadow();
-            dropShadow.Color = Color.FromArgb(255, 75, 75, 80);
-            dropShadow.BlurRadius = 15.0f;
+            dropShadow.Color = Colors.DarkGray;
+            dropShadow.BlurRadius = 5.0f;
             dropShadow.Offset = new Vector3(2.5f, 2.5f, 0.0f);
             // Associate the shape of the shadow with the shape of the target element
             dropShadow.Mask = shadowTarget.GetAlphaMask();
@@ -56,6 +59,9 @@ namespace StarWars.UniversalWindows.UserControls
             bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
 
             shadowVisual.StartAnimation("Size", bindSizeAnimation);
+
+            // TODO: why is it necessary for user control to refresh bindings after data context is loaded
+            Bindings.Update();
         }
     }
 }
