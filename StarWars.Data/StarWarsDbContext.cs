@@ -27,7 +27,19 @@ namespace StarWars.Data
             }
 
             {
+                var e = modelBuilder.Entity<Character>();
+
+                e.HasOne(x => x.HomeWorld)
+                 .WithMany()
+                 .HasForeignKey(x => x.HomeWorldId);
+            }
+
+            {
                 var e = modelBuilder.Entity<Species>();
+
+                e.HasOne(x => x.HomeWorld)
+                 .WithMany()
+                 .HasForeignKey(x => x.HomeWorldId);
             }
 
             {

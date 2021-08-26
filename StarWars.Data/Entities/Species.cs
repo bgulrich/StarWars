@@ -7,7 +7,6 @@ namespace StarWars.Data.Entities
     public class Species : EntityBase
     {
         public string Name { get; set; }
-
         public string Classification { get; set; }
         public string Designation { get; set; }
         public string AverageHeight { get; set; }
@@ -17,7 +16,9 @@ namespace StarWars.Data.Entities
         public string AverageLifespan { get; set; }
         public string Language { get; set; }
 
-        public int HomeWorldId { get; set; }        
+        public int? HomeWorldId { get; set; }
+        
+        public Planet HomeWorld { get; set; }
 
         public virtual ICollection<FilmSpecies> FilmSpecies { get; set; }
 

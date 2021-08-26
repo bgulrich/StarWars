@@ -54,32 +54,6 @@ namespace StarWars.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Species",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PhotoBytes = table.Column<byte[]>(nullable: true),
-                    Url = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    Edited = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Classification = table.Column<string>(nullable: true),
-                    Designation = table.Column<string>(nullable: true),
-                    AverageHeight = table.Column<string>(nullable: true),
-                    SkinColors = table.Column<string>(nullable: true),
-                    HairColors = table.Column<string>(nullable: true),
-                    EyeColors = table.Column<string>(nullable: true),
-                    AverageLifespan = table.Column<string>(nullable: true),
-                    Language = table.Column<string>(nullable: true),
-                    HomeWorldId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Species", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Starships",
                 columns: table => new
                 {
@@ -146,14 +120,14 @@ namespace StarWars.Data.Migrations
                     Created = table.Column<DateTime>(nullable: false),
                     Edited = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Height = table.Column<int>(nullable: false),
-                    Mass = table.Column<int>(nullable: false),
+                    Height = table.Column<string>(nullable: true),
+                    Mass = table.Column<string>(nullable: true),
                     HairColor = table.Column<string>(nullable: true),
                     SkinColor = table.Column<string>(nullable: true),
                     EyeColor = table.Column<string>(nullable: true),
                     BirthYear = table.Column<string>(nullable: true),
                     Gender = table.Column<string>(nullable: true),
-                    HomeWorldId = table.Column<int>(nullable: false)
+                    HomeWorldId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -163,7 +137,7 @@ namespace StarWars.Data.Migrations
                         column: x => x.HomeWorldId,
                         principalTable: "Planets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,27 +165,35 @@ namespace StarWars.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FilmSpecies",
+                name: "Species",
                 columns: table => new
                 {
-                    FilmId = table.Column<int>(nullable: false),
-                    SpeciesId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PhotoBytes = table.Column<byte[]>(nullable: true),
+                    Url = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Edited = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Classification = table.Column<string>(nullable: true),
+                    Designation = table.Column<string>(nullable: true),
+                    AverageHeight = table.Column<string>(nullable: true),
+                    SkinColors = table.Column<string>(nullable: true),
+                    HairColors = table.Column<string>(nullable: true),
+                    EyeColors = table.Column<string>(nullable: true),
+                    AverageLifespan = table.Column<string>(nullable: true),
+                    Language = table.Column<string>(nullable: true),
+                    HomeWorldId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FilmSpecies", x => new { x.FilmId, x.SpeciesId });
+                    table.PrimaryKey("PK_Species", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FilmSpecies_Films_FilmId",
-                        column: x => x.FilmId,
-                        principalTable: "Films",
+                        name: "FK_Species_Planets_HomeWorldId",
+                        column: x => x.HomeWorldId,
+                        principalTable: "Planets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FilmSpecies_Species_SpeciesId",
-                        column: x => x.SpeciesId,
-                        principalTable: "Species",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,30 +264,6 @@ namespace StarWars.Data.Migrations
                         name: "FK_CharacterPlanet_Planets_PlanetId",
                         column: x => x.PlanetId,
                         principalTable: "Planets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CharacterSpecies",
-                columns: table => new
-                {
-                    CharacterId = table.Column<int>(nullable: false),
-                    SpeciesId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CharacterSpecies", x => new { x.CharacterId, x.SpeciesId });
-                    table.ForeignKey(
-                        name: "FK_CharacterSpecies_Characters_CharacterId",
-                        column: x => x.CharacterId,
-                        principalTable: "Characters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CharacterSpecies_Species_SpeciesId",
-                        column: x => x.SpeciesId,
-                        principalTable: "Species",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -382,6 +340,54 @@ namespace StarWars.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CharacterSpecies",
+                columns: table => new
+                {
+                    CharacterId = table.Column<int>(nullable: false),
+                    SpeciesId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterSpecies", x => new { x.CharacterId, x.SpeciesId });
+                    table.ForeignKey(
+                        name: "FK_CharacterSpecies_Characters_CharacterId",
+                        column: x => x.CharacterId,
+                        principalTable: "Characters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CharacterSpecies_Species_SpeciesId",
+                        column: x => x.SpeciesId,
+                        principalTable: "Species",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FilmSpecies",
+                columns: table => new
+                {
+                    FilmId = table.Column<int>(nullable: false),
+                    SpeciesId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilmSpecies", x => new { x.FilmId, x.SpeciesId });
+                    table.ForeignKey(
+                        name: "FK_FilmSpecies_Films_FilmId",
+                        column: x => x.FilmId,
+                        principalTable: "Films",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FilmSpecies_Species_SpeciesId",
+                        column: x => x.SpeciesId,
+                        principalTable: "Species",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterPlanet_PlanetId",
                 table: "CharacterPlanet",
@@ -431,6 +437,11 @@ namespace StarWars.Data.Migrations
                 name: "IX_FilmVehicle_VehicleId",
                 table: "FilmVehicle",
                 column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Species_HomeWorldId",
+                table: "Species",
+                column: "HomeWorldId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

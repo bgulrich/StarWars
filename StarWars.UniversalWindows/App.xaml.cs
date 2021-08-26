@@ -69,11 +69,42 @@ namespace StarWars.UniversalWindows
 
             services.AddAutoMapper(cfg =>
             {
-                var indexRegex = new Regex(@"/?(<index>\d*)/$");
+                #region api models to db entities
+
+                Func<Uri, int> getId = (Uri uri) => int.Parse(uri.Segments.Last().Trim('/'));
+                Func<Uri, int?> getNullableId = (Uri uri) => uri == null ? (int?)null : getId(uri);
 
                 cfg.CreateMap<Film, Data.Entities.Film>()
-                   .ForMember(e => e.FilmCharacters, opt => opt.MapFrom(f => f.CharacterUris.Select(s => new Data.Entities.FilmCharacter { FilmId = f.EpisodeId, CharacterId = int.Parse(new Uri(s).Segments.Last().Trim('/')) })));
-               
+                   .ForMember(e => e.Id, opt => opt.MapFrom(f => f.EpisodeId))
+                   .ForMember(e => e.FilmCharacters, opt => opt.MapFrom(f => f.CharacterUris.Select(uri => new Data.Entities.FilmCharacter { FilmId = f.EpisodeId, CharacterId = getId(uri) })))
+                   .ForMember(e => e.FilmSpecies, opt => opt.MapFrom(f => f.SpeciesUris.Select(uri => new Data.Entities.FilmSpecies { FilmId = f.EpisodeId, SpeciesId = getId(uri) })))
+                   .ForMember(e => e.FilmPlanets, opt => opt.MapFrom(f => f.PlanetUris.Select(uri => new Data.Entities.FilmPlanet { FilmId = f.EpisodeId, PlanetId = getId(uri) })))
+                   .ForMember(e => e.FilmVehicles, opt => opt.MapFrom(f => f.VehicleUris.Select(uri => new Data.Entities.FilmVehicle { FilmId = f.EpisodeId, VehicleId = getId(uri) })))
+                   .ForMember(e => e.FilmStarships, opt => opt.MapFrom(f => f.PlanetUris.Select(uri => new Data.Entities.FilmStarship { FilmId = f.EpisodeId, StarshipId = getId(uri) })));
+
+                cfg.CreateMap<Person, Data.Entities.Character>()
+                   .ForMember(e => e.Id, opt => opt.MapFrom(p => getId(p.Uri)))
+                   .ForMember(e => e.HomeWorldId, opt => opt.MapFrom(p => getNullableId(p.HomeWorldUri)))
+                   .ForMember(e => e.CharacterSpecies, opt => opt.MapFrom(p => p.SpeciesUris.Select(uri => new Data.Entities.CharacterSpecies { CharacterId = getId(p.Uri), SpeciesId = getId(uri) })))
+                   .ForMember(e => e.CharacterStarships, opt => opt.MapFrom(p => p.StarshipUris.Select(uri => new Data.Entities.CharacterStarship { CharacterId = getId(p.Uri), StarshipId = getId(uri) })))
+                   .ForMember(e => e.CharacterVehicles, opt => opt.MapFrom(p => p.VehicleUris.Select(uri => new Data.Entities.CharacterVehicle { CharacterId = getId(p.Uri), VehicleId = getId(uri) })));
+
+                cfg.CreateMap<Species, Data.Entities.Species>()
+                   .ForMember(e => e.HomeWorldId, opt => opt.MapFrom(s => getNullableId(s.HomeWorldUri)));
+
+                cfg.CreateMap<Planet, Data.Entities.Planet>();
+
+                cfg.CreateMap<Vehicle, Data.Entities.Vehicle>();
+
+                cfg.CreateMap<Starship, Data.Entities.Starship>();
+
+                #endregion
+
+                #region db entities to view models
+
+                cfg.CreateMap<Data.Entities.Film, FilmViewModel>();
+
+                #endregion
             });
 
             services.AddRefitClient<IStarWarsApi>(new RefitSettings(new NewtonsoftJsonContentSerializer(new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() })))

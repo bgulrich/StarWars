@@ -9,5 +9,8 @@ namespace StarWars.ApiClient.Models
         public int Count { get; set; }
 
         public IEnumerable<T> Results { get; set; }
+
+        public Uri Previous { get; set; }
+        public Uri Next { get; set; }
     }
 }

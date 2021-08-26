@@ -40,14 +40,14 @@ namespace StarWars.Data.Migrations
                     b.Property<string>("HairColor")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Height")
+                    b.Property<string>("Height")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("HomeWorldId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("HomeWorldId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Mass")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Mass")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
@@ -321,7 +321,7 @@ namespace StarWars.Data.Migrations
                     b.Property<string>("HairColors")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("HomeWorldId")
+                    b.Property<int?>("HomeWorldId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Language")
@@ -340,6 +340,8 @@ namespace StarWars.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HomeWorldId");
 
                     b.ToTable("Species");
                 });
@@ -466,9 +468,7 @@ namespace StarWars.Data.Migrations
                 {
                     b.HasOne("StarWars.Data.Entities.Planet", "HomeWorld")
                         .WithMany()
-                        .HasForeignKey("HomeWorldId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HomeWorldId");
                 });
 
             modelBuilder.Entity("StarWars.Data.Entities.CharacterPlanet", b =>
@@ -604,6 +604,13 @@ namespace StarWars.Data.Migrations
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("StarWars.Data.Entities.Species", b =>
+                {
+                    b.HasOne("StarWars.Data.Entities.Planet", "HomeWorld")
+                        .WithMany()
+                        .HasForeignKey("HomeWorldId");
                 });
 #pragma warning restore 612, 618
         }
