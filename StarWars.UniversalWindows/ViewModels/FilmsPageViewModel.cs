@@ -27,12 +27,9 @@ namespace StarWars.UniversalWindows.ViewModels
 
         public FilmsPageViewModel(StarWarsDbContext context, IMapper mapper)
         {
-            //_starWarsApi = starWarsApi ?? throw new ArgumentNullException(nameof(starWarsApi));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        }
-
-        
+        }        
 
         public async Task RefreshListAsync()
         {

@@ -143,6 +143,9 @@ namespace StarWars.Data.Migrations
                     b.Property<DateTime>("Edited")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("EpisodeId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("OpeningCrawl")
                         .HasColumnType("TEXT");
 

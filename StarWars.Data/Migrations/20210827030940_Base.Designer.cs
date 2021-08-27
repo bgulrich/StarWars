@@ -9,7 +9,7 @@ using StarWars.Data;
 namespace StarWars.Data.Migrations
 {
     [DbContext(typeof(StarWarsDbContext))]
-    [Migration("20210826034619_Base")]
+    [Migration("20210827030940_Base")]
     partial class Base
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,6 +144,9 @@ namespace StarWars.Data.Migrations
 
                     b.Property<DateTime>("Edited")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("EpisodeId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("OpeningCrawl")
                         .HasColumnType("TEXT");

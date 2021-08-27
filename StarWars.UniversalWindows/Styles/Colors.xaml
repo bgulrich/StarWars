@@ -1,0 +1,14 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="MutedGreen">#4E614D</Color>
+    <Color x:Key="MutedPurple">#2C1D30</Color>
+    <Color x:Key="MutedYellow">#B2A64D</Color>
+    <Color x:Key="MutedRed">#8C6866</Color>
+    <Color x:Key="MutedBlue">#485175</Color>
+    <Color x:Key="MutedOrange">#D07936</Color>
+
+    <SolidColorBrush x:Key="MutedBlueBrush" Color="{StaticResource MutedBlue}"/>
+
+</ResourceDictionary>

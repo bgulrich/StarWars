@@ -13,6 +13,7 @@ namespace StarWars.UniversalWindows.ViewModels
 {
     public class InitializationPageViewModel : ViewModelBase
     {
+        private float _progress;
         private string _message = "Welcome to the party.  Click below to initialize the database.";
         private PlaceholderType _icon;
         private readonly StarWarsDbContext _context;
@@ -31,6 +32,13 @@ namespace StarWars.UniversalWindows.ViewModels
             private set => Set(ref _icon, value);
         }
 
+        public float Progress
+        {
+            get => _progress;
+            private set => Set(ref _progress, value);
+        }
+
+
         public InitializationPageViewModel(StarWarsDbContext context, IStarWarsApi starWarsApi, IMapper mapper)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
@@ -38,15 +46,19 @@ namespace StarWars.UniversalWindows.ViewModels
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         
-        public async Task InitializeDatabaseAsync()
+        public async Task<bool> InitializeDatabaseAsync()
         {
             try
             {
                 #region database
 
+                Progress = 0f;
+
                 Message = "Creating Database...";
 
                 await _context.Database.EnsureCreatedAsync();
+
+                Progress = 10f;
 
                 #endregion
 
@@ -54,11 +66,15 @@ namespace StarWars.UniversalWindows.ViewModels
 
                 Message = "Loading Films...";
 
+                Icon = PlaceholderType.Film;
+
                 var films = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetFilmsAsync(new QueryParameters { page = page }));
 
                 var filmEntities = films.Select(f => _mapper.Map<Data.Entities.Film>(f));
 
                 _context.Films.AddRange(filmEntities);
+
+                Progress = 20f;
 
                 #endregion
 
@@ -66,17 +82,22 @@ namespace StarWars.UniversalWindows.ViewModels
 
                 Message = "Loading Characters...";
 
+                Icon = PlaceholderType.Person;
+
                 var characters = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetPeopleAsync(new QueryParameters { page = page }));
 
                 var characterEntities = characters.Select(c => _mapper.Map<Data.Entities.Character>(c));
 
                 _context.Characters.AddRange(characterEntities);
 
+                Progress = 40f;
+
                 #endregion
 
                 #region species
 
                 Message = "Loading Species...";
+                Icon = PlaceholderType.Species;
 
                 var species = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetSpeciesAsync(new QueryParameters { page = page }));
 
@@ -84,11 +105,14 @@ namespace StarWars.UniversalWindows.ViewModels
 
                 _context.Species.AddRange(speciesEntities);
 
+                Progress = 50f;
+
                 #endregion
 
                 #region planets
 
                 Message = "Loading Planets...";
+                Icon = PlaceholderType.Planet;
 
                 var planets = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetPlanetsAsync(new QueryParameters { page = page }));
 
@@ -96,11 +120,15 @@ namespace StarWars.UniversalWindows.ViewModels
 
                 _context.Planets.AddRange(planetEntities);
 
+                Progress = 60f;
+
                 #endregion
 
                 #region vehicles
 
                 Message = "Loading Vehicles...";
+
+                Icon = PlaceholderType.Vehicle;
 
                 var vehicles = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetVehiclesAsync(new QueryParameters { page = page }));
 
@@ -108,11 +136,15 @@ namespace StarWars.UniversalWindows.ViewModels
 
                 _context.Vehicles.AddRange(vehicleEntities);
 
+                Progress = 70f;
+
                 #endregion
 
                 #region vehicles
 
                 Message = "Loading Starships...";
+
+                Icon = PlaceholderType.Starship;
 
                 var starships = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetStarshipsAsync(new QueryParameters { page = page }));
 
@@ -120,14 +152,24 @@ namespace StarWars.UniversalWindows.ViewModels
 
                 _context.Starships.AddRange(starshipEntities);
 
+                Progress = 80f;
+
                 #endregion
 
                 await _context.SaveChangesAsync();
 
+                Progress = 100;
+                return true;
+
             }
             // TODO
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex) { }
-            catch { }        
+            catch(Exception ex)
+            {
+                await _context.Database.EnsureDeletedAsync();
+                Progress = 0f;
+
+                return false;
+            }    
         }
 
         private async Task<IEnumerable<TModel>> ProcessPaginatedModelAsync<TModel>(Func<int, Task<PaginatedResults<TModel>>> getter)

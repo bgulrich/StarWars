@@ -75,12 +75,12 @@ namespace StarWars.UniversalWindows
                 Func<Uri, int?> getNullableId = (Uri uri) => uri == null ? (int?)null : getId(uri);
 
                 cfg.CreateMap<Film, Data.Entities.Film>()
-                   .ForMember(e => e.Id, opt => opt.MapFrom(f => f.EpisodeId))
-                   .ForMember(e => e.FilmCharacters, opt => opt.MapFrom(f => f.CharacterUris.Select(uri => new Data.Entities.FilmCharacter { FilmId = f.EpisodeId, CharacterId = getId(uri) })))
-                   .ForMember(e => e.FilmSpecies, opt => opt.MapFrom(f => f.SpeciesUris.Select(uri => new Data.Entities.FilmSpecies { FilmId = f.EpisodeId, SpeciesId = getId(uri) })))
-                   .ForMember(e => e.FilmPlanets, opt => opt.MapFrom(f => f.PlanetUris.Select(uri => new Data.Entities.FilmPlanet { FilmId = f.EpisodeId, PlanetId = getId(uri) })))
-                   .ForMember(e => e.FilmVehicles, opt => opt.MapFrom(f => f.VehicleUris.Select(uri => new Data.Entities.FilmVehicle { FilmId = f.EpisodeId, VehicleId = getId(uri) })))
-                   .ForMember(e => e.FilmStarships, opt => opt.MapFrom(f => f.PlanetUris.Select(uri => new Data.Entities.FilmStarship { FilmId = f.EpisodeId, StarshipId = getId(uri) })));
+                   .ForMember(e => e.Id, opt => opt.MapFrom(f => getId(f.Uri)))
+                   .ForMember(e => e.FilmCharacters, opt => opt.MapFrom(f => f.CharacterUris.Select(uri => new Data.Entities.FilmCharacter { FilmId = getId(f.Uri), CharacterId = getId(uri) })))
+                   .ForMember(e => e.FilmSpecies, opt => opt.MapFrom(f => f.SpeciesUris.Select(uri => new Data.Entities.FilmSpecies { FilmId = getId(f.Uri), SpeciesId = getId(uri) })))
+                   .ForMember(e => e.FilmPlanets, opt => opt.MapFrom(f => f.PlanetUris.Select(uri => new Data.Entities.FilmPlanet { FilmId = getId(f.Uri), PlanetId = getId(uri) })))
+                   .ForMember(e => e.FilmVehicles, opt => opt.MapFrom(f => f.VehicleUris.Select(uri => new Data.Entities.FilmVehicle { FilmId = getId(f.Uri), VehicleId = getId(uri) })))
+                   .ForMember(e => e.FilmStarships, opt => opt.MapFrom(f => f.StarshipUris.Select(uri => new Data.Entities.FilmStarship { FilmId = getId(f.Uri), StarshipId = getId(uri) })));
 
                 cfg.CreateMap<Person, Data.Entities.Character>()
                    .ForMember(e => e.Id, opt => opt.MapFrom(p => getId(p.Uri)))
@@ -90,13 +90,17 @@ namespace StarWars.UniversalWindows
                    .ForMember(e => e.CharacterVehicles, opt => opt.MapFrom(p => p.VehicleUris.Select(uri => new Data.Entities.CharacterVehicle { CharacterId = getId(p.Uri), VehicleId = getId(uri) })));
 
                 cfg.CreateMap<Species, Data.Entities.Species>()
+                   .ForMember(e => e.Id, opt => opt.MapFrom(s => getId(s.Uri)))
                    .ForMember(e => e.HomeWorldId, opt => opt.MapFrom(s => getNullableId(s.HomeWorldUri)));
 
-                cfg.CreateMap<Planet, Data.Entities.Planet>();
+                cfg.CreateMap<Planet, Data.Entities.Planet>()
+                   .ForMember(e => e.Id, opt => opt.MapFrom(p => getId(p.Uri)));
 
-                cfg.CreateMap<Vehicle, Data.Entities.Vehicle>();
+                cfg.CreateMap<Vehicle, Data.Entities.Vehicle>()
+                   .ForMember(e => e.Id, opt => opt.MapFrom(v => getId(v.Uri)));
 
-                cfg.CreateMap<Starship, Data.Entities.Starship>();
+                cfg.CreateMap<Starship, Data.Entities.Starship>()
+                   .ForMember(e => e.Id, opt => opt.MapFrom(s => getId(s.Uri)));
 
                 #endregion
 

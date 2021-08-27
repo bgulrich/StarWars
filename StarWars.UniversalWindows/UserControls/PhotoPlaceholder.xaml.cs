@@ -15,18 +15,19 @@ namespace StarWars.UniversalWindows.UserControls
         Person,
         Starship,
         Vehicle,
-        Species
+        Species,
+        Planet
     }
 
     public sealed partial class PhotoPlaceholder : UserControl
     {
         private static Color[] backgroundColors = {
-                                                    Color.FromArgb(0xff, 0x4e, 0x61, 0x4d),  // green
-                                                    Color.FromArgb(0xff, 0x2C, 0x1d, 0x30),  // purple
-                                                    Color.FromArgb(0xff, 0xb2, 0xa6, 0x4d),  // yellow
-                                                    Color.FromArgb(0xff, 0x8c, 0x68, 0x66),  // red
-                                                    Color.FromArgb(0xff, 0x48, 0x51, 0x75),  // blue
-                                                    Color.FromArgb(0xff, 0xd0, 0x79, 0x36)   // orange
+                                                    (Color)App.Current.Resources["MutedGreen"],
+                                                    (Color)App.Current.Resources["MutedYellow"],
+                                                    (Color)App.Current.Resources["MutedRed"],
+                                                    (Color)App.Current.Resources["MutedBlue"],
+                                                    (Color)App.Current.Resources["MutedOrange"],
+                                                    (Color)App.Current.Resources["MutedPurple"]
                                                   };
 
         private static Brush[] backgroundBrushes;
@@ -83,16 +84,21 @@ namespace StarWars.UniversalWindows.UserControls
             if (newValue == (PlaceholderType)e.OldValue)
                 return;
 
-            string pathString = null;
+            string pathKey = null;
+
 
             switch(newValue)
             {
-                case PlaceholderType.Film: pathString = (string)App.Current.Resources["IconPath_Film"]; break;
-                case PlaceholderType.Person: pathString = (string)App.Current.Resources["IconPath_Person"]; break;
+                case PlaceholderType.Film: pathKey = "IconPath_Film"; break;
+                case PlaceholderType.Person: pathKey = "IconPath_Person"; break;
+                case PlaceholderType.Starship: pathKey = "IconPath_Rocket"; break;
+                case PlaceholderType.Vehicle: pathKey = "IconPath_Car"; break;
+                case PlaceholderType.Planet: pathKey = "IconPath_Planet"; break;
+                case PlaceholderType.Species: pathKey = "IconPath_Monkey"; break;
             }
 
-            if (pathString != null)
-                ph.PlaceholderIconPath.Data = Converters.Xaml.PathMarkupToGeometry(pathString);
+            if (pathKey != null)
+                ph.PlaceholderIconPath.Data = Converters.Xaml.PathMarkupToGeometry((string)App.Current.Resources[pathKey]);
 
         }
 

@@ -7,18 +7,10 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <!--<ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key="Default">
-                    <SolidColorBrush x:Key="SystemAccentColor" Color="Blue"/>
-                </ResourceDictionary>
-            </ResourceDictionary.ThemeDictionaries>-->
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles\Colors.xaml"/>
                 <ResourceDictionary Source="Styles\Generic.xaml"/>
-                <!--<ResourceDictionary Source="Styles\Styles.xaml"/>
-                <ResourceDictionary Source="Styles\Colors.xaml"/>-->
                 <ResourceDictionary Source="VectorArt\IconPaths.xaml"/>
-                <!--<ResourceDictionary Source="Converters\Converters.xaml"/>
-                <ResourceDictionary Source="Keys\Keys.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -17,6 +17,7 @@ namespace StarWars.Data.Migrations
                     Url = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     Edited = table.Column<DateTime>(nullable: false),
+                    EpisodeId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     OpeningCrawl = table.Column<string>(nullable: true),
                     Director = table.Column<string>(nullable: true),

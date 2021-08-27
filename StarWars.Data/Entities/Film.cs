@@ -6,6 +6,7 @@ namespace StarWars.Data.Entities
 {
     public class Film : EntityBase
     {
+        public int EpisodeId { get; set; }
         public string Title { get; set; }
         public string OpeningCrawl { get; set; }
         public string Director { get; set; }
