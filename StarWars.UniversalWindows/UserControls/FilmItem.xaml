@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:StarWars.UniversalWindows.UserControls"
+    xmlns:converters="using:StarWars.UniversalWindows.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -25,7 +26,15 @@
         <Canvas x:Name="ShadowHost" Grid.ColumnSpan="4" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-10"/>
         <Rectangle x:Name="Rectangle" Grid.ColumnSpan="4" Grid.RowSpan="3" Fill="White" RadiusX="5" RadiusY="5" Stroke="Black" StrokeThickness="0.10" Margin="-10"/>
         <uc:Photo x:Name="Photo" Margin="10" Grid.RowSpan="3" UseRandomBackgroundColor="True" PlaceholderType="Film"/>
-        <TextBlock x:Name="Title" FontSize="28" FontWeight="SemiBold" Margin="10" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Center" Text="{x:Bind Film.Title}"/>
+
+        <StackPanel Grid.RowSpan="3" Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock x:Name="Episode" FontSize="16" FontWeight="SemiBold" Margin="10 0 0 0" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Center">
+                <Run Text="Episode"/>
+                <Run Text="{x:Bind converters:RomanNumeralConverter.IntToRomanNumeral(Film.EpisodeId)}"/>
+            </TextBlock>
+            <TextBlock x:Name="Title" FontSize="28" FontWeight="SemiBold" Margin="10 0 10 0" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Center" Text="{x:Bind Film.Title}"/>
+        </StackPanel>
+            
         <TextBlock Margin="5" Grid.Column="3">
             <Run Text="Directed by"/>
             <Run  Text="{x:Bind Film.Director}"/>

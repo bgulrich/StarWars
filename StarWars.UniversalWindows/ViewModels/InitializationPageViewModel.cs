@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using StarWars.ApiClient;
 using StarWars.ApiClient.Models;
 using StarWars.Data;
@@ -16,7 +17,6 @@ namespace StarWars.UniversalWindows.ViewModels
         private float _progress;
         private string _message = "Welcome to the party.  Click below to initialize the database.";
         private PlaceholderType _icon;
-        private readonly StarWarsDbContext _context;
         private readonly IStarWarsApi _starWarsApi;
         private readonly IMapper _mapper;
 
@@ -39,9 +39,8 @@ namespace StarWars.UniversalWindows.ViewModels
         }
 
 
-        public InitializationPageViewModel(StarWarsDbContext context, IStarWarsApi starWarsApi, IMapper mapper)
+        public InitializationPageViewModel(IStarWarsApi starWarsApi, IMapper mapper)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
             _starWarsApi = starWarsApi ?? throw new ArgumentNullException(nameof(starWarsApi));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
@@ -50,122 +49,127 @@ namespace StarWars.UniversalWindows.ViewModels
         {
             try
             {
-                #region database
+                using (var context = App.Current.Services.GetRequiredService<StarWarsDbContext>())
+                {
 
-                Progress = 0f;
+                    #region database
 
-                Message = "Creating Database...";
+                    Progress = 0f;
 
-                await _context.Database.EnsureCreatedAsync();
+                    Message = "Creating Database...";
 
-                Progress = 10f;
+                    await context.Database.EnsureCreatedAsync();
 
-                #endregion
+                    Progress = 10f;
 
-                #region films 
+                    #endregion
 
-                Message = "Loading Films...";
+                    #region films 
 
-                Icon = PlaceholderType.Film;
+                    Message = "Loading Films...";
 
-                var films = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetFilmsAsync(new QueryParameters { page = page }));
+                    Icon = PlaceholderType.Film;
 
-                var filmEntities = films.Select(f => _mapper.Map<Data.Entities.Film>(f));
+                    var films = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetFilmsAsync(new QueryParameters { page = page }));
 
-                _context.Films.AddRange(filmEntities);
+                    var filmEntities = films.Select(f => _mapper.Map<Data.Entities.Film>(f));
 
-                Progress = 20f;
+                    context.Films.AddRange(filmEntities);
 
-                #endregion
+                    Progress = 20f;
 
-                #region people
+                    #endregion
 
-                Message = "Loading Characters...";
+                    #region people
 
-                Icon = PlaceholderType.Person;
+                    Message = "Loading Characters...";
 
-                var characters = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetPeopleAsync(new QueryParameters { page = page }));
+                    Icon = PlaceholderType.Person;
 
-                var characterEntities = characters.Select(c => _mapper.Map<Data.Entities.Character>(c));
+                    var characters = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetPeopleAsync(new QueryParameters { page = page }));
 
-                _context.Characters.AddRange(characterEntities);
+                    var characterEntities = characters.Select(c => _mapper.Map<Data.Entities.Character>(c));
 
-                Progress = 40f;
+                    context.Characters.AddRange(characterEntities);
 
-                #endregion
+                    Progress = 40f;
 
-                #region species
+                    #endregion
 
-                Message = "Loading Species...";
-                Icon = PlaceholderType.Species;
+                    #region species
 
-                var species = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetSpeciesAsync(new QueryParameters { page = page }));
+                    Message = "Loading Species...";
+                    Icon = PlaceholderType.Species;
 
-                var speciesEntities = species.Select(s => _mapper.Map<Data.Entities.Species>(s));
+                    var species = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetSpeciesAsync(new QueryParameters { page = page }));
 
-                _context.Species.AddRange(speciesEntities);
+                    var speciesEntities = species.Select(s => _mapper.Map<Data.Entities.Species>(s));
 
-                Progress = 50f;
+                    context.Species.AddRange(speciesEntities);
 
-                #endregion
+                    Progress = 50f;
 
-                #region planets
+                    #endregion
 
-                Message = "Loading Planets...";
-                Icon = PlaceholderType.Planet;
+                    #region planets
 
-                var planets = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetPlanetsAsync(new QueryParameters { page = page }));
+                    Message = "Loading Planets...";
+                    Icon = PlaceholderType.Planet;
 
-                var planetEntities = planets.Select(p => _mapper.Map<Data.Entities.Planet>(p));
+                    var planets = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetPlanetsAsync(new QueryParameters { page = page }));
 
-                _context.Planets.AddRange(planetEntities);
+                    var planetEntities = planets.Select(p => _mapper.Map<Data.Entities.Planet>(p));
 
-                Progress = 60f;
+                    context.Planets.AddRange(planetEntities);
 
-                #endregion
+                    Progress = 60f;
 
-                #region vehicles
+                    #endregion
 
-                Message = "Loading Vehicles...";
+                    #region vehicles
 
-                Icon = PlaceholderType.Vehicle;
+                    Message = "Loading Vehicles...";
 
-                var vehicles = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetVehiclesAsync(new QueryParameters { page = page }));
+                    Icon = PlaceholderType.Vehicle;
 
-                var vehicleEntities = vehicles.Select(v => _mapper.Map<Data.Entities.Vehicle>(v));
+                    var vehicles = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetVehiclesAsync(new QueryParameters { page = page }));
 
-                _context.Vehicles.AddRange(vehicleEntities);
+                    var vehicleEntities = vehicles.Select(v => _mapper.Map<Data.Entities.Vehicle>(v));
 
-                Progress = 70f;
+                    context.Vehicles.AddRange(vehicleEntities);
 
-                #endregion
+                    Progress = 70f;
 
-                #region vehicles
+                    #endregion
 
-                Message = "Loading Starships...";
+                    #region vehicles
 
-                Icon = PlaceholderType.Starship;
+                    Message = "Loading Starships...";
 
-                var starships = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetStarshipsAsync(new QueryParameters { page = page }));
+                    Icon = PlaceholderType.Starship;
 
-                var starshipEntities = starships.Select(s => _mapper.Map<Data.Entities.Starship>(s));
+                    var starships = await ProcessPaginatedModelAsync((int page) => _starWarsApi.GetStarshipsAsync(new QueryParameters { page = page }));
 
-                _context.Starships.AddRange(starshipEntities);
+                    var starshipEntities = starships.Select(s => _mapper.Map<Data.Entities.Starship>(s));
 
-                Progress = 80f;
+                    context.Starships.AddRange(starshipEntities);
 
-                #endregion
+                    Progress = 80f;
 
-                await _context.SaveChangesAsync();
+                    #endregion
+
+                    await context.SaveChangesAsync();
+                }
 
                 Progress = 100;
                 return true;
-
             }
             // TODO
             catch(Exception ex)
             {
-                await _context.Database.EnsureDeletedAsync();
+                using(var context = App.Current.Services.GetRequiredService<StarWarsDbContext>())
+                    await context.Database.EnsureDeletedAsync();
+                
                 Progress = 0f;
 
                 return false;

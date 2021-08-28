@@ -9,6 +9,15 @@
     <Color x:Key="MutedBlue">#485175</Color>
     <Color x:Key="MutedOrange">#D07936</Color>
 
+    <Color x:Key="MutedBlueLow">#404268</Color>
+
     <SolidColorBrush x:Key="MutedBlueBrush" Color="{StaticResource MutedBlue}"/>
+    <SolidColorBrush x:Key="MutedBlueLowBrush" Color="{StaticResource MutedBlueLow}"/>
+
+    <Color x:Key="DisabledGray">#A0A0A0</Color>
+    <SolidColorBrush x:Key="DisabledGrayBrush" Color="{StaticResource DisabledGray}"/>
+
+    <Color x:Key="DisabledContent">#D0D0D0</Color>
+    <SolidColorBrush x:Key="DisabledContentBrush" Color="{StaticResource DisabledContent}"/>
 
 </ResourceDictionary>

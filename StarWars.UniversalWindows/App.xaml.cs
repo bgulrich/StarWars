@@ -62,7 +62,7 @@ namespace StarWars.UniversalWindows
         {
             var services = new ServiceCollection();
 
-            services.AddDbContext<StarWarsDbContext>();
+            services.AddDbContext<StarWarsDbContext>(contextLifetime: ServiceLifetime.Transient, optionsLifetime: ServiceLifetime.Singleton);
 
             services.AddTransient<ViewModels.InitializationPageViewModel>();
             services.AddTransient<ViewModels.FilmsPageViewModel>();

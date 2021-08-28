@@ -13,7 +13,7 @@
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
         <uc:Photo x:Name="Icon" Image="/assets/StarWarsLogo.jpg" Height="150" Width="150" PlaceholderType="{x:Bind ViewModel.Icon, Mode=OneWay, FallbackValue = Film}" Margin="20"/>
         <TextBlock FontSize="28" TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWholeWords" Text="{x:Bind ViewModel.Message, Mode=OneWay}"/>
-        <Button x:Name="InitializeButton" HorizontalAlignment="Center" Margin="20" Click="InitializeButton_Click">Initialize</Button>
+        <uc:RoundedIconButton x:Name="InitializeButton" HorizontalAlignment="Center" Margin="20" Click="InitializeButton_Click" IconPath="{StaticResource IconPath_Database}">Initialize</uc:RoundedIconButton>
         <ProgressBar Height="20" Width="400" Margin="20" Value="{x:Bind ViewModel.Progress, Mode=OneWay}" />
     </StackPanel>
 </Page>
